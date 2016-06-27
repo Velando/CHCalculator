@@ -2,7 +2,6 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * Created by Philip on 26-06-2016.
