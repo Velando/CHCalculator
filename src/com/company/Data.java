@@ -34,7 +34,6 @@ public class Data {
         oldLevels = new Ancients().getAncients();
         calc = new Calculator(decoder.getHZE(), decoder.getTP());
         newLevels = calc.getNewLevels();
-
     }
 
     public List<Ancient> getOldLevels(){

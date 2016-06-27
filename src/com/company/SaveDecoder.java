@@ -33,7 +33,6 @@ public class SaveDecoder {
 
     private JSONObject decryptSave(String saveCode){
         if (saveCode.equals(ANTI_CHEAT_CODE)) {
-            System.out.println("Invalid save string!");
             return null;
         }
         Boolean b = saveCode.contains(ANTI_CHEAT_CODE);
@@ -42,7 +41,6 @@ public class SaveDecoder {
             try {
                 saveCode = fromAntiCheatFormat(saveCode);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("Invalid save string");
                 return null;
             }
         }
@@ -51,7 +49,6 @@ public class SaveDecoder {
             JSONObject obj = new JSONObject(s);
             return obj;
         } catch(JSONException e){
-            System.out.println("Invalid save string!");
             return null;
         }
     }
@@ -64,6 +61,18 @@ public class SaveDecoder {
 
     public int getHZE(){
         return Integer.parseInt(decryptedObj.get("highestFinishedZonePersist").toString());
+    }
+
+    public double getImmortalDamage(){
+        String s = decryptedObj.get("titanDamage").toString();
+        if(s.contains("e")){
+            String[] arr = s.split("e");
+            Double d1 = Double.parseDouble(arr[0]);
+            Double d2 = Double.parseDouble(arr[1]);
+            Double res = d1*(Math.pow(10,d2));
+            return res;
+        }
+        return Double.parseDouble(s);
     }
 
     public double getTP(){
