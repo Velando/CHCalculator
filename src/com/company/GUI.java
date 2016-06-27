@@ -1,5 +1,7 @@
 package com.company;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,26 +28,33 @@ public class GUI{
         mainFrame.setLocation(dim.width/2-mainFrame.getSize().width/2, dim.height/2-mainFrame.getSize().height/2);
 
         JLabel label = new JLabel("Paste your save string below",JLabel.CENTER);
-        JTextArea textField = new JTextArea();
-        textField.setLineWrap(true);
+        JTextArea textArea = new JTextArea();
+        textArea.setLineWrap(true);
         JButton button = new JButton("Calculate!");
 
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(new SaveDecoder(textField.getText()).getAncients() == null){
+                if(new SaveDecoder(textArea.getText()).getAncients() == null){
                     JOptionPane.showMessageDialog(null, "Invalid save string, please try again!");
                 }
                 else{
-                    data.init(textField.getText());
+                    data.init(textArea.getText());
                     showNew();
                     mainFrame.setVisible(false);
                 }
             }
         });
+        KeyStroke keyStroke = KeyStroke.getKeyStroke("ENTER");
+        textArea.getActionMap().put(textArea.getInputMap(JComponent.WHEN_FOCUSED).get(keyStroke), new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                button.doClick();
+            }
+        });
 
         mainFrame.add(label);
-        JScrollPane scrollPane = new JScrollPane(textField);
+        JScrollPane scrollPane = new JScrollPane(textArea);
         mainFrame.add(scrollPane);
         mainFrame.add(button);
 
@@ -63,6 +72,8 @@ public class GUI{
 
         JTable table = new JTable(data.getColumnData(), data.getColumnNames());
         table.setEnabled(false);
+        table.getTableHeader().setReorderingAllowed(false);
+        table.getTableHeader().setResizingAllowed(false);
         table.getColumnModel().getColumn(0).setPreferredWidth(125);
 
         JButton button = new JButton("Back");
