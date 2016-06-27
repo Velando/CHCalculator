@@ -5,9 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.EmptyStackException;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
