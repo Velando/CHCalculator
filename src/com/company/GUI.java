@@ -65,9 +65,20 @@ public class GUI{
         table.setEnabled(false);
         table.getColumnModel().getColumn(0).setPreferredWidth(125);
 
+        JButton button = new JButton("Back");
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                show();
+                mainFrame.setVisible(false);
+            }
+        });
+
 
         mainFrame.add(table.getTableHeader(), BorderLayout.PAGE_START);
         mainFrame.add(table, BorderLayout.CENTER);
+        mainFrame.add(button,BorderLayout.PAGE_END);
 
         mainFrame.setVisible(true);
     }
