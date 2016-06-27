@@ -28,7 +28,7 @@ public class Ancients {
     }
 
     private void createAncients() {
-        JSONObject obj = Main.DECODER.getAncients();
+        JSONObject obj = Data.getInstance().getAncients();
 
         for(Object o : obj.names()){
             ancients.add(new Ancient(getAncientName(o.toString()),Integer.parseInt(o.toString()),getAncientLevel(obj, o.toString())));
