@@ -197,7 +197,7 @@ public class Calculator {
 
     private double bubosCost(double currLevel, double newLevel){
         double cost = 0.0;
-        for(double n = currLevel+1.0; n <= newLevel; n++){
+        for(double n = currLevel; n < newLevel; n++){
             cost+=4.0*Math.pow(2.0,n-1.0);
         }
         return cost;
@@ -205,7 +205,7 @@ public class Calculator {
 
     private double solomonCost(double currLevel, double newLevel){
         double cost = 0.0;
-        for(double n = currLevel+1.0; n <= newLevel; n++){
+        for(double n = currLevel; n < newLevel; n++){
             cost+=Math.pow(n,1.5);
         }
         return cost;
@@ -244,6 +244,7 @@ public class Calculator {
             case "Kumawakamaru": cost = bubosCost(a.getLevel(), newLevel);
                 break;
         }
+        double c = getChorEff((chorLevel));
         return (int) (cost*(1-getChorEff(chorLevel)));
     }
 
