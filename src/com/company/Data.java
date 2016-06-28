@@ -1,9 +1,8 @@
 package com.company;
 
-import com.company.Ancient;
-import com.company.SaveDecoder;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,16 +24,17 @@ public class Data {
 
     private List<Ancient> oldLevels;
     private List<Ancient> newLevels;
+    private List<Outsider> outsiders;
     private SaveDecoder decoder;
     private Calculator calc;
 
     public void init(String code){
         if(decoder == null)
             decoder = new SaveDecoder(code);
-        decoder.getAncients();
         oldLevels = new Ancients().getAncients();
         calc = new Calculator(decoder.getHZE(), decoder.getTP());
         newLevels = calc.getNewLevels();
+        outsiders = setUpOutsiders(decoder.getOutsiders());
     }
 
     public List<Ancient> getOldLevels(){
@@ -59,12 +59,12 @@ public class Data {
     }
 
     public String[] getColumnNames(){
-        String[] s =  {"Ancient", "Current level", "Suggested level", "Difference"};
+        String[] s =  {"Ancient", "Current level", "Suggested level", "Difference", "Cost"};
         return s;
     }
 
     public Object[][] getColumnData(){
-        Object[][] data = new Object[oldLevels.size()][4];
+        Object[][] data = new Object[oldLevels.size()][5];
         for(int i = 0; i < oldLevels.size(); i++){
             Ancient oldL = oldLevels.get(i);
             Ancient newL = newLevels.get(i);
@@ -72,8 +72,59 @@ public class Data {
             data[i][1] = oldL.getLevel();
             data[i][2] = newL.getLevel();
             data[i][3] = newL.getLevel()-oldL.getLevel();
+            data[i][4] = calc.calcCost(oldL,getChorLevel(),newL.getLevel());
         }
         return data;
+    }
+
+    private List<Outsider> setUpOutsiders(JSONObject obj){
+        ArrayList<Outsider> list = new ArrayList<>();
+
+        for(Object o : obj.names()){
+            String id = o.toString();
+            list.add(new Outsider(getOutsiderName(id), Integer.parseInt(id), getOutsiderLevel(obj, id)));
+        }
+
+
+
+        return list;
+    }
+
+    public double getChorLevel(){
+        return getDecoder().getOutsiders().getJSONObject("2").getDouble("level");
+    }
+
+    private double getOutsiderLevel(JSONObject obj, String id){
+        String l = obj.getJSONObject(id).get("level").toString();
+        if(l.contains("e")){
+            String[] arr = l.split("e");
+            Double d1 = Double.parseDouble(arr[0]);
+            Double d2 = Double.parseDouble(arr[1]);
+            Double res = d1*(Math.pow(10,d2));
+            return res;
+        }
+
+        if(l.contains(".")) {
+            return Double.parseDouble(l.split("\\.")[0]);
+        }
+        return Double.parseDouble(l);
+    }
+
+    private String getOutsiderName(String id){
+        String outsiderName = "";
+        switch (id){
+            case "1" : outsiderName = "Xyliqil";
+                break;
+            case "2" : outsiderName = "Chor'gorloth";
+                break;
+            case "3" : outsiderName = "Phandoryss";
+                break;
+            case "4" : outsiderName = "Borb";
+                break;
+            case "5" : outsiderName = "Ponyboy";
+                break;
+        }
+        return outsiderName;
     }
 
 }

@@ -54,6 +54,12 @@ public class SaveDecoder {
         return decryptedObj.getJSONObject("ancients").getJSONObject("ancients");
     }
 
+    public JSONObject getOutsiders(){
+        if(decryptedObj == null)
+            return null;
+        return decryptedObj.getJSONObject("outsiders").getJSONObject("outsiders");
+    }
+
     public int getHZE(){
         return Integer.parseInt(decryptedObj.get("highestFinishedZonePersist").toString());
     }

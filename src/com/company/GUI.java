@@ -74,7 +74,10 @@ public class GUI{
         table.setEnabled(false);
         table.getTableHeader().setReorderingAllowed(false);
         table.getTableHeader().setResizingAllowed(false);
-        table.getColumnModel().getColumn(0).setPreferredWidth(125);
+        table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        for(int i = 1; i < table.getColumnModel().getColumnCount(); i++){
+            table.getColumnModel().getColumn(i).setPreferredWidth(5);
+        }
 
         JButton button = new JButton("Back");
 

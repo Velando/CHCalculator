@@ -7,12 +7,12 @@ import java.util.Comparator;
  */
 public class Ancient {
     private String name;
-    private int uid;
+    private int id;
     private double level;
 
-    public Ancient(String n, int id, double l) {
+    public Ancient(String n, int i, double l) {
         name = n;
-        uid = id;
+        id = i;
         level = l;
     }
 
@@ -20,8 +20,8 @@ public class Ancient {
         return name;
     }
 
-    public int getUid() {
-        return uid;
+    public int getId() {
+        return id;
     }
 
     public double getLevel() {
@@ -34,7 +34,7 @@ public class Ancient {
 
     @Override
     public String toString() {
-        return "Name: " + name + ". ID: " + uid + ". Level: " + level + ".";
+        return "Name: " + name + ". ID: " + id + ". Level: " + level + ".";
     }
 
     public static Comparator<Ancient> getComp() {

@@ -23,8 +23,9 @@ public class Calculator {
 
     public void calc(){
         for (Ancient a : ancients){
-            if(a.getName().startsWith("Siyalatas"))
+            if(a.getName().startsWith("Siyalatas")) {
                 siyaLevel = a.getLevel();
+            }
         }
         for(Ancient a : ancients){
             a.setLevel(calcAll(a));
@@ -180,6 +181,70 @@ public class Calculator {
                 break;
         }
         return newLevel;
+    }
+
+    private double getChorEff(double level){
+        return 1.0-Math.pow(0.95,level);
+    }
+
+    private double siyaCost(double currLevel, double newLevel){
+        double cost = 0.0;
+        for(double n = currLevel+1.0; n <= newLevel; n++){
+            cost+=n;
+        }
+        return cost;
+    }
+
+    private double bubosCost(double currLevel, double newLevel){
+        double cost = 0.0;
+        for(double n = currLevel+1.0; n <= newLevel; n++){
+            cost+=4.0*Math.pow(2.0,n-1.0);
+        }
+        return cost;
+    }
+
+    private double solomonCost(double currLevel, double newLevel){
+        double cost = 0.0;
+        for(double n = currLevel+1.0; n <= newLevel; n++){
+            cost+=Math.pow(n,1.5);
+        }
+        return cost;
+    }
+
+    public int calcCost(Ancient a, double chorLevel, double newLevel){
+        String ancientName = a.getName().split(",")[0];
+        double cost = 0.0;
+        switch (ancientName){
+            case "Siyalatas": cost = siyaCost(a.getLevel(), newLevel);
+                break;
+            case "Argaiv": cost = siyaCost(a.getLevel(), newLevel);
+                break;
+            case "Morgulis": cost = newLevel-a.getLevel();
+                break;
+            case "Bubos": cost = bubosCost(a.getLevel(), newLevel);
+                break;
+            case "Chronos": cost = bubosCost(a.getLevel(), newLevel);
+                break;
+            case "Libertas": cost = siyaCost(a.getLevel(), newLevel);
+                break;
+            case "Mammon": cost = siyaCost(a.getLevel(), newLevel);
+                break;
+            case "Mimzee": cost = siyaCost(a.getLevel(), newLevel);
+                break;
+            case "Dora": cost = bubosCost(a.getLevel(), newLevel);
+                break;
+            case "Dogcog": cost = bubosCost(a.getLevel(), newLevel);
+                break;
+            case "Fortuna": cost = bubosCost(a.getLevel(), newLevel);
+                break;
+            case "Solomon": cost = solomonCost(a.getLevel(), newLevel);
+                break;
+            case "Atman": cost = bubosCost(a.getLevel(), newLevel);
+                break;
+            case "Kumawakamaru": cost = bubosCost(a.getLevel(), newLevel);
+                break;
+        }
+        return (int) (cost*(1-getChorEff(chorLevel)));
     }
 
 /**
