@@ -35,7 +35,7 @@ public class GUI{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(new SaveDecoder(textArea.getText()).getAncients() == null){
+                if(data.getDecoder(textArea.getText()).getAncients() == null ){
                     JOptionPane.showMessageDialog(null, "Invalid save string, please try again!");
                 }
                 else{

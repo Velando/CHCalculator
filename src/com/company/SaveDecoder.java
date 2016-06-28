@@ -26,11 +26,6 @@ public class SaveDecoder {
         decryptedObj = decryptSave(importedCode);
     }
 
-    public SaveDecoder(){
-
-    }
-
-
     private JSONObject decryptSave(String saveCode){
         if (saveCode.equals(ANTI_CHEAT_CODE)) {
             return null;

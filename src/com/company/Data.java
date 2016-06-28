@@ -29,7 +29,8 @@ public class Data {
     private Calculator calc;
 
     public void init(String code){
-        decoder = new SaveDecoder(code);
+        if(decoder == null)
+            decoder = new SaveDecoder(code);
         decoder.getAncients();
         oldLevels = new Ancients().getAncients();
         calc = new Calculator(decoder.getHZE(), decoder.getTP());
@@ -42,6 +43,11 @@ public class Data {
 
     public List<Ancient> getNewLevels(){
         return newLevels;
+    }
+
+    public SaveDecoder getDecoder(String code){
+        decoder = new SaveDecoder(code);
+        return decoder;
     }
 
     public SaveDecoder getDecoder(){
