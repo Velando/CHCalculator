@@ -2,6 +2,8 @@ package com.company;
 
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +66,8 @@ public class Data {
     }
 
     public Object[][] getColumnData(){
-        Object[][] data = new Object[oldLevels.size()][5];
+        Object[][] data = new Object[oldLevels.size()+1][5];
+        double totalCost = 0;
         for(int i = 0; i < oldLevels.size(); i++){
             Ancient oldL = oldLevels.get(i);
             Ancient newL = newLevels.get(i);
@@ -72,8 +75,12 @@ public class Data {
             data[i][1] = oldL.getLevel();
             data[i][2] = newL.getLevel();
             data[i][3] = newL.getLevel()-oldL.getLevel();
-            data[i][4] = calc.calcCost(oldL,getChorLevel(),newL.getLevel());
+            double newCost = calc.calcCost(oldL,getChorLevel(),newL.getLevel());
+            data[i][4] = newCost;
+            totalCost+=newCost;
         }
+        data[oldLevels.size()][0] = "Total";
+        data[oldLevels.size()][4] = totalCost;
         return data;
     }
 
